@@ -5,7 +5,6 @@
   <title>Vysnap Tech | UngaA – Smart Study Video Recommendations</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    /* ===== Global Styles ===== */
     :root {
       --bg-dark: #050816;
       --bg-card: #0f172a;
@@ -14,7 +13,6 @@
       --text-main: #e5e7eb;
       --text-muted: #9ca3af;
       --success: #22c55e;
-      --shadow-soft: 0 20px 40px rgba(0, 0, 0, 0.4);
       --transition-fast: 0.25s ease;
     }
 
@@ -30,11 +28,6 @@
       color: var(--text-main);
       min-height: 100vh;
       overflow-x: hidden;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
     }
 
     .page {
@@ -78,8 +71,6 @@
       font-weight: 800;
       color: #0b1220;
       font-size: 18px;
-      box-shadow: var(--shadow-soft);
-      flex-shrink: 0;
     }
 
     .brand-text-title {
@@ -205,7 +196,7 @@
       justify-content: center;
     }
 
-    /* ===== Phone Mockup ===== */
+    /* ===== Phone Preview ===== */
     .enhanced-phone {
       width: 270px;
       border-radius: 36px;
@@ -277,36 +268,13 @@
       color: #6b7280;
     }
 
-    .chat-meta {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      font-size: 10px;
-    }
-
-    .chat-badge {
-      background: #0284c7;
-      color: white;
-      padding: 2px 6px;
-      border-radius: 10px;
-      font-size: 9px;
-      margin-top: 4px;
-    }
-
     .app-footer {
       display: flex;
       justify-content: space-around;
-      align-items: center;
       background: #f1f5f9;
       padding: 8px 0;
       font-size: 11px;
       border-top: 1px solid #e2e8f0;
-    }
-
-    .tab {
-      color: #64748b;
-      flex: 1;
-      text-align: center;
     }
 
     .tab.active {
@@ -329,67 +297,88 @@
       font-weight: 600;
     }
 
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 960px) {
+    /* ===== MODAL ===== */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 50;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: #0f172a;
+      padding: 24px;
+      border-radius: 16px;
+      max-width: 340px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    }
+
+    .modal-content h3 {
+      color: var(--accent);
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    .modal-content p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .modal-content input {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      background: #1e293b;
+      color: #fff;
+      margin-bottom: 14px;
+    }
+
+    .modal-content button {
+      width: 100%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      color: #0b1220;
+    }
+
+    .close-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 12px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 900px) {
       .hero {
         grid-template-columns: 1fr;
-        gap: 50px;
         text-align: center;
-      }
-
-      .hero-left {
-        order: 2;
+        gap: 50px;
       }
 
       .hero-right {
-        order: 1;
+        order: -1;
       }
 
-      .hero-subtitle,
-      ul {
+      .hero-subtitle, ul {
         text-align: left;
-        margin-inline: auto;
-        max-width: 92%;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .navbar {
-        flex-direction: column;
-        align-items: flex-start;
-        border-radius: 16px;
-        gap: 8px;
-        padding: 12px 14px;
-      }
-
-      .nav-actions {
-        width: 100%;
-        justify-content: space-between;
-      }
-
-      .btn-primary {
-        flex: 1;
-        justify-content: center;
-      }
-
-      .hero-title {
-        font-size: 30px;
-      }
-
-      .enhanced-phone {
-        transform: scale(0.95);
-      }
-    }
-
-    @media (max-width: 400px) {
-      .btn-primary,
-      .pill {
-        font-size: 12px;
-        padding: 6px 10px;
-      }
-
-      .hero-title {
-        font-size: 26px;
+        margin: auto;
+        max-width: 90%;
       }
     }
   </style>
@@ -402,14 +391,12 @@
         <div class="brand-logo">V</div>
         <div>
           <div class="brand-text-title">Vysnap Tech</div>
-          <div class="brand-text-sub">Learning with AI</div>
+          <div class="brand-text-sub">Learning · AI · Video</div>
         </div>
       </div>
       <div class="nav-actions">
         <div class="pill">Launching — UngaA App</div>
-        <button class="btn-primary">
-          ⏱ Notify on Launch
-        </button>
+        <button class="btn-primary" id="notifyBtn">⏱ Notify on Launch</button>
       </div>
     </header>
 
@@ -456,43 +443,29 @@
                 <span>＋</span>
               </div>
             </div>
-
             <div class="chat-list">
               <div class="chat-item">
-                <img src="https://randomuser.me/api/portraits/men/31.jpg" alt="avatar" />
+                <img src="https://randomuser.me/api/portraits/men/31.jpg" />
                 <div class="chat-info">
-                  <div class="chat-name">Senthil</div>
+                  <div class="chat-name">AAA</div>
                   <div class="chat-sub">Tap to start conversation</div>
-                </div>
-                <div class="chat-meta">
-                  <span class="chat-date">09/05</span>
-                  <span class="chat-badge">1</span>
                 </div>
               </div>
               <div class="chat-item">
-                <img src="https://randomuser.me/api/portraits/men/33.jpg" alt="avatar" />
+                <img src="https://randomuser.me/api/portraits/men/31.jpg" />
                 <div class="chat-info">
-                  <div class="chat-name">Tejas Kumar</div>
+                  <div class="chat-name">AAA</div>
                   <div class="chat-sub">Tap to start conversation</div>
-                </div>
-                <div class="chat-meta">
-                  <span class="chat-date">08/05</span>
-                  <span class="chat-badge">12</span>
                 </div>
               </div>
               <div class="chat-item">
-                <img src="https://randomuser.me/api/portraits/men/34.jpg" alt="avatar" />
+                <img src="https://randomuser.me/api/portraits/men/31.jpg" />
                 <div class="chat-info">
-                  <div class="chat-name">Gobinth</div>
+                  <div class="chat-name">AAA</div>
                   <div class="chat-sub">Tap to start conversation</div>
-                </div>
-                <div class="chat-meta">
-                  <span class="chat-date">08/05</span>
-                  <span class="chat-badge">12</span>
                 </div>
               </div>
             </div>
-
             <div class="app-footer">
               <div class="tab active">🏠 Home</div>
               <div class="tab">💬 Ask</div>
@@ -504,15 +477,43 @@
       </div>
     </section>
 
-    <!-- Footer -->
     <footer class="footer">
-      © <span id="yearSpan"></span> <span class="brand">Vysnap Tech</span>.  
-      UngaA app is in private beta. Launching soon.
+      © <span id="yearSpan"></span> <span class="brand">Vysnap Tech</span>. UngaA app is in private beta. Launching soon.
     </footer>
+  </div>
+
+  <!-- Email Modal -->
+  <div class="modal" id="emailModal">
+    <div class="modal-content">
+      <h3>Get Notified</h3>
+      <p>Enter your email and we’ll let you know when UngaA launches.</p>
+      <input type="email" id="emailInput" placeholder="Enter your email" required />
+      <button id="submitEmail">Notify Me</button>
+      <button class="close-btn" id="closeModal">Cancel</button>
+    </div>
   </div>
 
   <script>
     document.getElementById("yearSpan").textContent = new Date().getFullYear();
+
+    const modal = document.getElementById("emailModal");
+    const openBtn = document.getElementById("notifyBtn");
+    const closeBtn = document.getElementById("closeModal");
+    const submitBtn = document.getElementById("submitEmail");
+
+    openBtn.onclick = () => modal.classList.add("active");
+    closeBtn.onclick = () => modal.classList.remove("active");
+    modal.onclick = e => { if (e.target === modal) modal.classList.remove("active"); };
+
+    submitBtn.onclick = () => {
+      const email = document.getElementById("emailInput").value.trim();
+      if (email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        alert(`✅ You'll be notified at ${email} when we launch!`);
+        modal.classList.remove("active");
+      } else {
+        alert("⚠️ Please enter a valid email address.");
+      }
+    };
   </script>
 </body>
 </html>
