@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Vysnap Tech | UngaA – Smart Study Video Recommendations</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    /* ===== Global Styles ===== */
+    :root {
+      --bg-dark: #050816;
+      --bg-card: #0f172a;
+      --accent: #38bdf8;
+      --accent-2: #a855f7;
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --success: #22c55e;
+      --shadow-soft: 0 20px 40px rgba(0, 0, 0, 0.4);
+      --transition-fast: 0.25s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Inter", system-ui, sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #1f2937 0%, #020617 70%);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 16px 80px;
+    }
+
+    /* ===== Navbar ===== */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 999px;
+      padding: 12px 18px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.9);
+      gap: 10px;
+      position: sticky;
+      top: 16px;
+      z-index: 10;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      background: conic-gradient(from 180deg, #38bdf8, #a855f7, #22c55e, #38bdf8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: #0b1220;
+      font-size: 18px;
+      box-shadow: var(--shadow-soft);
+      flex-shrink: 0;
+    }
+
+    .brand-text-title {
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .brand-text-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .btn-primary {
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border: none;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      color: #0b1220;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 15px 30px rgba(56, 189, 248, 0.35);
+      transition: var(--transition-fast);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+    }
+
+    /* ===== Hero Section ===== */
+    .hero {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      align-items: center;
+      gap: 40px;
+      margin-top: 60px;
+    }
+
+    .hero-left-title-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      font-size: 11px;
+      margin-bottom: 18px;
+    }
+
+    .hero-left-title-pill-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--success);
+      box-shadow: 0 0 10px rgba(34, 197, 94, 0.8);
+    }
+
+    .hero-left-title-pill-strong {
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: 0.1em;
+    }
+
+    .hero-title {
+      font-size: clamp(30px, 4vw, 46px);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 14px;
+    }
+
+    .hero-title span.highlight {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      max-width: 500px;
+    }
+
+    .hero-subtitle strong {
+      color: var(--text-main);
+    }
+
+    ul {
+      color: #9ca3af;
+      font-size: 14px;
+      line-height: 1.8;
+      margin: 12px 0 0 18px;
+    }
+
+    .hero-right {
+      display: flex;
+      justify-content: center;
+    }
+
+    /* ===== Phone Mockup ===== */
+    .enhanced-phone {
+      width: 270px;
+      border-radius: 36px;
+      padding: 12px;
+      background: radial-gradient(circle at 20% 20%, #1f2937 0%, #020617 100%);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+      overflow: hidden;
+      animation: floatPhone 5s ease-in-out infinite;
+    }
+
+    @keyframes floatPhone {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    .phone-screen {
+      background: #fff;
+      border-radius: 26px;
+      overflow: hidden;
+      height: 460px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .app-header {
+      background: #0284c7;
+      color: #fff;
+      font-weight: 600;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+    }
+
+    .chat-list {
+      flex: 1;
+      background: #f9fafb;
+      overflow-y: auto;
+    }
+
+    .chat-item {
+      display: flex;
+      align-items: center;
+      padding: 10px 12px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .chat-item img {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .chat-info {
+      flex: 1;
+    }
+
+    .chat-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    .chat-sub {
+      font-size: 11px;
+      color: #6b7280;
+    }
+
+    .chat-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      font-size: 10px;
+    }
+
+    .chat-badge {
+      background: #0284c7;
+      color: white;
+      padding: 2px 6px;
+      border-radius: 10px;
+      font-size: 9px;
+      margin-top: 4px;
+    }
+
+    .app-footer {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      background: #f1f5f9;
+      padding: 8px 0;
+      font-size: 11px;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .tab {
+      color: #64748b;
+      flex: 1;
+      text-align: center;
+    }
+
+    .tab.active {
+      color: #0284c7;
+      font-weight: 600;
+    }
+
+    /* ===== Footer ===== */
+    .footer {
+      text-align: center;
+      margin-top: 60px;
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      padding-inline: 12px;
+    }
+
+    .footer span.brand {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 960px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 50px;
+        text-align: center;
+      }
+
+      .hero-left {
+        order: 2;
+      }
+
+      .hero-right {
+        order: 1;
+      }
+
+      .hero-subtitle,
+      ul {
+        text-align: left;
+        margin-inline: auto;
+        max-width: 92%;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        border-radius: 16px;
+        gap: 8px;
+        padding: 12px 14px;
+      }
+
+      .nav-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .btn-primary {
+        flex: 1;
+        justify-content: center;
+      }
+
+      .hero-title {
+        font-size: 30px;
+      }
+
+      .enhanced-phone {
+        transform: scale(0.95);
+      }
+    }
+
+    @media (max-width: 400px) {
+      .btn-primary,
+      .pill {
+        font-size: 12px;
+        padding: 6px 10px;
+      }
+
+      .hero-title {
+        font-size: 26px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- Navbar -->
+    <header class="navbar">
+      <div class="brand">
+        <div class="brand-logo">V</div>
+        <div>
+          <div class="brand-text-title">Vysnap Tech</div>
+          <div class="brand-text-sub">Learning · AI · Video</div>
+        </div>
+      </div>
+      <div class="nav-actions">
+        <div class="pill">Launching — UngaA App</div>
+        <button class="btn-primary">
+          ⏱ Notify on Launch
+        </button>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-left">
+        <div class="hero-left-title-pill">
+          <div class="hero-left-title-pill-dot"></div>
+          <span class="hero-left-title-pill-strong">Launching Soon</span>
+          <span>UngaA — Smarter Way to Learn</span>
+        </div>
+
+        <h1 class="hero-title">
+          Learn <span class="highlight">anything faster</span><br />
+          with AI-powered video insights.
+        </h1>
+
+        <p class="hero-subtitle">
+          <strong>UngaA by Vysnap Tech</strong> is your personal AI study partner that helps you 
+          <strong>understand any topic</strong> — not just watch it.  
+          Explore key features like:
+        </p>
+
+        <ul>
+          <li>🎯 <strong>Smart Concept Search</strong> — Finds the best explanation videos.</li>
+          <li>📺 <strong>AI-Recommended YouTube Clips</strong> — Short & focused.</li>
+          <li>📖 <strong>Meaning-Based Understanding</strong> — Learn with examples.</li>
+          <li>📊 <strong>Progress Tracking</strong> — Track what you master.</li>
+        </ul>
+
+        <p class="hero-subtitle" style="margin-top:10px;">
+          Turn every study session into a smarter, personalized experience with <strong>UngaA</strong>.
+        </p>
+      </div>
+
+      <div class="hero-right">
+        <div class="enhanced-phone">
+          <div class="phone-screen">
+            <div class="app-header">
+              <span>←</span>
+              <span class="app-title">Chat</span>
+              <div class="app-actions">
+                <span>🔍</span>
+                <span>＋</span>
+              </div>
+            </div>
+
+            <div class="chat-list">
+              <div class="chat-item">
+                <img src="https://randomuser.me/api/portraits/men/31.jpg" alt="avatar" />
+                <div class="chat-info">
+                  <div class="chat-name">Senthil</div>
+                  <div class="chat-sub">Tap to start conversation</div>
+                </div>
+                <div class="chat-meta">
+                  <span class="chat-date">09/05</span>
+                  <span class="chat-badge">1</span>
+                </div>
+              </div>
+              <div class="chat-item">
+                <img src="https://randomuser.me/api/portraits/men/33.jpg" alt="avatar" />
+                <div class="chat-info">
+                  <div class="chat-name">Tejas Kumar</div>
+                  <div class="chat-sub">Tap to start conversation</div>
+                </div>
+                <div class="chat-meta">
+                  <span class="chat-date">08/05</span>
+                  <span class="chat-badge">12</span>
+                </div>
+              </div>
+              <div class="chat-item">
+                <img src="https://randomuser.me/api/portraits/men/34.jpg" alt="avatar" />
+                <div class="chat-info">
+                  <div class="chat-name">Gobinth</div>
+                  <div class="chat-sub">Tap to start conversation</div>
+                </div>
+                <div class="chat-meta">
+                  <span class="chat-date">08/05</span>
+                  <span class="chat-badge">12</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="app-footer">
+              <div class="tab active">🏠 Home</div>
+              <div class="tab">💬 Ask</div>
+              <div class="tab">👥 Friends</div>
+              <div class="tab">⚙️ Settings</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      © <span id="yearSpan"></span> <span class="brand">Vysnap Tech</span>.  
+      UngaA app is in private beta. Launching soon.
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById("yearSpan").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
