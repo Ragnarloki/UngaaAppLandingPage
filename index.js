@@ -124,3 +124,4 @@ document.addEventListener('DOMContentLoaded', () => {
 		signupForm.innerHTML = `<div style="color:var(--muted)">Thanks! We'll reach out to ${email}.</div>`;
 	});
 });
+
