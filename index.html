@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>Vysnap Tech | UngaA – Smart Study Video Recommendations</title>
@@ -24,7 +25,8 @@
     }
 
     body {
-      background: radial-gradient(circle at top, #1f2937 0%, #020617 70%);
+      background-image: url("assets/bg.gif");
+      /* background: radial-gradient(circle at top, #1f2937 0%, #020617 70%);*/
       color: var(--text-main);
       min-height: 100vh;
       overflow-x: hidden;
@@ -209,8 +211,15 @@
     }
 
     @keyframes floatPhone {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-6px);
+      }
     }
 
     .phone-screen {
@@ -319,7 +328,7 @@
       max-width: 340px;
       width: 90%;
       text-align: center;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
     }
 
     .modal-content h3 {
@@ -375,14 +384,212 @@
         order: -1;
       }
 
-      .hero-subtitle, ul {
+      .hero-subtitle,
+      ul {
         text-align: left;
         margin: auto;
         max-width: 90%;
       }
     }
+
+    /* ===== RIGHT GLOBE VISUAL ===== */
+    .globe-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .globe-wrapper {
+      position: relative;
+      width: 400px;
+      height: 400px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .globe-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 0 25px #4d96ff);
+      animation: floatGlobe 6s ease-in-out infinite;
+    }
+
+    @keyframes floatGlobe {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    /* MOBILE CENTER IMAGE */
+    .mobile-img {
+      position: absolute;
+      z-index: 2;
+      width: 100px;
+      height: 160px;
+      filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.9));
+      animation: phoneFloat 4s ease-in-out infinite;
+    }
+
+    @keyframes phoneFloat {
+      0% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
+
+      100% {
+        transform: translateY(0px);
+      }
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1200px) {
+      .globe-wrapper {
+        width: 320px;
+        height: 320px;
+      }
+    }
+
+    @media (max-width: 992px) {
+      .globe-wrapper {
+        width: 280px;
+        height: 280px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .globe-wrapper {
+        width: 230px;
+        height: 230px;
+      }
+
+      .mobile-img {
+        width: 80px;
+        height: 130px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .globe-wrapper {
+        width: 190px;
+        height: 190px;
+      }
+
+      .mobile-img {
+        width: 65px;
+        height: 110px;
+      }
+    }
+
+    /* ===== ANIMATED TITLE ===== */
+    .title-wrapper {
+      position: relative;
+      display: inline-block;
+      margin: 24px 0 28px;
+    }
+
+    .animated-title {
+      position: relative;
+      padding: 26px 60px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 80px;
+    }
+
+    /* LETTERS */
+    .letter {
+      font-size: 56px;
+      font-weight: 800;
+      letter-spacing: 4px;
+      color: #ffffff;
+
+      opacity: 0;
+      transform: scale(0.2);
+      animation: letterPop 0.6s ease forwards;
+
+      text-shadow:
+        0 0 6px #fff,
+        0 0 14px #fff,
+        0 0 26px #6fb3ff,
+        0 0 44px #6fb3ff;
+    }
+
+    @keyframes letterPop {
+      0% {
+        opacity: 0;
+        transform: scale(0.2);
+      }
+
+      60% {
+        opacity: 1;
+        transform: scale(1.25);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* SVG BORDER */
+    .title-border {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .title-border rect {
+      fill: transparent;
+      stroke: #ffffff;
+      stroke-width: 3;
+      stroke-dasharray: 1600;
+      stroke-dashoffset: 1600;
+      animation: drawBorder 2.6s ease-out forwards;
+
+      filter: drop-shadow(0 0 6px #fff);
+    }
+
+    @keyframes drawBorder {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .letter {
+        font-size: 34px;
+        letter-spacing: 3px;
+      }
+
+      .animated-title {
+        padding: 18px 36px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .letter {
+        font-size: 26px;
+        letter-spacing: 2px;
+      }
+
+      .animated-title {
+        padding: 14px 26px;
+      }
+    }
   </style>
 </head>
+
 <body>
   <div class="page">
     <!-- Navbar -->
@@ -403,20 +610,29 @@
     <!-- Hero Section -->
     <section class="hero">
       <div class="hero-left">
-        <div class="hero-left-title-pill">
+        <!-- <div class="hero-left-title-pill">
           <div class="hero-left-title-pill-dot"></div>
           <span class="hero-left-title-pill-strong">Launching Soon</span>
           <span>UngaA — Smarter Way to Learn</span>
-        </div>
+        </div> -->
+
+        <div class="animated-title" id="animatedTitle">
+  <!-- letters injected by JS -->
+
+  <svg class="title-border" viewBox="0 0 600 140" preserveAspectRatio="none">
+    <rect x="5" y="5" rx="70" ry="70" width="590" height="130"></rect>
+  </svg>
+</div>
+
 
         <h1 class="hero-title">
-  <span id="typedText" class="highlight"></span>
-</h1>
+          <span id="typedText" class="highlight"></span>
+        </h1>
 
 
         <p class="hero-subtitle">
-          <strong>UngaA by Vysnap Tech</strong> is your personal AI study partner that helps you 
-          <strong>understand any topic</strong> — not just watch it.  
+          <strong>UngaA by Vysnap Tech</strong> is your personal AI study partner that helps you
+          <strong>understand any topic</strong> — not just watch it.
           Explore key features like:
         </p>
 
@@ -432,7 +648,7 @@
         </p>
       </div>
 
-      <div class="hero-right">
+      <!-- <div class="hero-right">
         <div class="enhanced-phone">
           <div class="phone-screen">
             <div class="app-header">
@@ -474,11 +690,23 @@
             </div>
           </div>
         </div>
+      </div> -->
+      <div class="globe-container">
+        <div class="globe-wrapper">
+
+          <!-- GLOBE -->
+          <img src="https://i.pinimg.com/originals/c1/1f/5d/c11f5d2adaff0ea886cac7162d086c1b.gif" class="globe-img"
+            alt="Globe">
+
+          <img src="./assets/unga.png" class="mobile-img" alt="Mobile" width="100px" height="160px">
+
+        </div>
       </div>
     </section>
 
     <footer class="footer">
-      © <span id="yearSpan"></span> <span class="brand">Vysnap Tech</span>. UngaA app is in private beta. Launching soon.
+      © <span id="yearSpan"></span> <span class="brand">Vysnap Tech</span>. UngaA app is in private beta. Launching
+      soon.
     </footer>
   </div>
 
@@ -514,42 +742,65 @@
         alert("⚠️ Please enter a valid email address.");
       }
     };
-      const texts = [
-    "Learn anything faster",
-    "Understand concepts deeply",
-    "Study smarter with AI-powered videos"
-  ];
+    const texts = [
+      "Learn anything faster",
+      "Understand concepts deeply",
+      "Study smarter with AI-powered videos"
+    ];
 
-  const typedText = document.getElementById("typedText");
+    const typedText = document.getElementById("typedText");
 
-  let textIndex = 0;
-  let charIndex = 0;
-  let isDeleting = false;
+    let textIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
 
-  function typeEffect() {
-    const currentText = texts[textIndex];
+    function typeEffect() {
+      const currentText = texts[textIndex];
 
-    if (!isDeleting) {
-      typedText.textContent = currentText.substring(0, charIndex + 1);
-      charIndex++;
+      if (!isDeleting) {
+        typedText.textContent = currentText.substring(0, charIndex + 1);
+        charIndex++;
 
-      if (charIndex === currentText.length) {
-        setTimeout(() => isDeleting = true, 1200); // pause after full text
+        if (charIndex === currentText.length) {
+          setTimeout(() => isDeleting = true, 1200); // pause after full text
+        }
+      } else {
+        typedText.textContent = currentText.substring(0, charIndex - 1);
+        charIndex--;
+
+        if (charIndex === 0) {
+          isDeleting = false;
+          textIndex = (textIndex + 1) % texts.length;
+        }
       }
-    } else {
-      typedText.textContent = currentText.substring(0, charIndex - 1);
-      charIndex--;
 
-      if (charIndex === 0) {
-        isDeleting = false;
-        textIndex = (textIndex + 1) % texts.length;
-      }
+      setTimeout(typeEffect, isDeleting ? 50 : 80);
     }
 
-    setTimeout(typeEffect, isDeleting ? 50 : 80);
+    typeEffect();
+
+     /* ===== ANIMATED TITLE ===== */
+  const titleText = 'COMING SOON';
+  const animatedTitle = document.getElementById('animatedTitle');
+
+  function buildAnimatedTitle(text) {
+    const svg = animatedTitle.querySelector('svg');
+    animatedTitle.innerHTML = '';
+
+    [...text].forEach((char, index) => {
+      const span = document.createElement('span');
+      span.className = 'letter';
+      span.style.animationDelay = `${index * 0.15}s`;
+      span.innerHTML = char === ' ' ? '&nbsp;' : char;
+      animatedTitle.appendChild(span);
+    });
+
+    animatedTitle.appendChild(svg);
   }
 
-  typeEffect();
+  // same as ngOnInit()
+  buildAnimatedTitle(titleText);
   </script>
 </body>
+
 </html>

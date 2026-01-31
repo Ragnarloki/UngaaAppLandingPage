@@ -123,5 +123,28 @@ document.addEventListener('DOMContentLoaded', () => {
 		if(!email) return;
 		signupForm.innerHTML = `<div style="color:var(--muted)">Thanks! We'll reach out to ${email}.</div>`;
 	});
+
+
+	 /* ===== ANIMATED TITLE ===== */
+  const titleText = 'COMING SOON';
+  const animatedTitle = document.getElementById('animatedTitle');
+
+  function buildAnimatedTitle(text) {
+    const svg = animatedTitle.querySelector('svg');
+    animatedTitle.innerHTML = '';
+
+    [...text].forEach((char, index) => {
+      const span = document.createElement('span');
+      span.className = 'letter';
+      span.style.animationDelay = `${index * 0.15}s`;
+      span.innerHTML = char === ' ' ? '&nbsp;' : char;
+      animatedTitle.appendChild(span);
+    });
+
+    animatedTitle.appendChild(svg);
+  }
+
+  // same as ngOnInit()
+  buildAnimatedTitle(titleText);
 });
 
