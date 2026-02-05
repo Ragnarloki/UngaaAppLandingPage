@@ -26,7 +26,9 @@
 
     body {
       background-image: url("assets/bg.gif");
-      /* background: radial-gradient(circle at top, #1f2937 0%, #020617 70%);*/
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center center;
       color: var(--text-main);
       min-height: 100vh;
       overflow-x: hidden;
@@ -589,11 +591,10 @@
     }
 
     .fixed-title {
-  min-height: 2.4em;
-  display: flex;
-  align-items: center;
-}
-
+      min-height: 2.4em;
+      display: flex;
+      align-items: center;
+    }
   </style>
 </head>
 
